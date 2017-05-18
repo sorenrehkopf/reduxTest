@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import {render} from 'react-dom';
 import {BrowserRouter,Route,IndexRoute,browserHistory} from 'react-router-dom';
 
-import Home from './components/home.component.jsx';
-import Hello from './components/hello.component.jsx';
+import Login from './components/login.component.jsx';
+import Main from './components/main.component.jsx';
+import User from './services/user.jsx';
+
+function hello(){
+	console.log('hey!');
+}
 
 render(<BrowserRouter history="browserHistory">
 			<div>
-				<Route exact path="/" component={Home}/>
-				<Route path="/hello" component={Hello}/>
+				<Route path="/" component={Main}/>
+				<Route path="/login" component={Login}/>
 			</div>
 		</BrowserRouter>
 	, document.getElementById('app-container'));
