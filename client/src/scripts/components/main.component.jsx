@@ -5,13 +5,13 @@ import { Route } from 'react-router-dom';
 import Home from './home.component.jsx';
 import Hello from './hello.component.jsx';
 
-import User from '../services/user.jsx';
+import Auth from '../services/auth.jsx';
 
 
 class Main extends Component{
 
 	componentWillMount(){
-		if(!User.check()) this.props.history.replace('/login');
+		if(!Auth.check()) this.props.history.replace('/login');
 	}
 
 	render(){
