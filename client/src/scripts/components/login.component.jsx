@@ -10,8 +10,10 @@ class Login extends Component{
 		let data = getFormData(e.nativeEvent.target);
 		Auth.authenticate(data,function(){
 			this.props.history.replace('/hello');
-		}.bind(this));
-	}
+		}.bind(this),
+		function(err){alert('error logging you in: '+err)}
+		)
+	}	
 
 	render(){
 		return(<form onSubmit={this.login.bind(this)}>

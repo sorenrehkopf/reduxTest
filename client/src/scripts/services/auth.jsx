@@ -27,6 +27,10 @@ class Auth{
 		});
 	}
 
+	static logout(){
+		localStorage.removeItem('authToken');
+	}
+
 }
 
 export default Auth;

@@ -12,8 +12,9 @@ function authenticate(req,res,next){
 		var name = jwt.decode(req.headers.authtoken,process.env['secret']);
 		req.user = users[name.name];
 		next();
+	}else{
+		res.status(403).send(false);
 	}
-	next();
 };
 
 module.exports = authenticate;

@@ -28288,7 +28288,9 @@
 				var data = (0, _getFormData2.default)(e.nativeEvent.target);
 				_auth2.default.authenticate(data, function () {
 					this.props.history.replace('/hello');
-				}.bind(this));
+				}.bind(this), function (err) {
+					alert('error logging you in: ' + err);
+				});
 			}
 		}, {
 			key: 'render',
@@ -28366,6 +28368,11 @@
 					if (eb) eb();
 				});
 			}
+		}, {
+			key: 'logout',
+			value: function logout() {
+				localStorage.removeItem('authToken');
+			}
 		}]);
 
 		return Auth;
@@ -28394,9 +28401,9 @@
 			req.onreadystatechange = function () {
 				console.log(req.readyState);
 				if (req.readyState === 4) {
-					if (req.status === 200) {
+					if (req.status >= 200 && req.status < 210) {
 						resolve(req.response);
-					}
+					} else reject(req.response);
 				}
 			};
 		});
@@ -28470,22 +28477,62 @@
 		function Main() {
 			_classCallCheck(this, Main);
 
-			return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
+
+			_this.state = {};
+			return _this;
 		}
 
 		_createClass(Main, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				if (!_auth2.default.check()) this.props.history.replace('/login');
+				if (_auth2.default.check()) {
+					this.setState({
+						loggedIn: true
+					});
+				} else {
+					this.setState({
+						loggedIn: false
+					});
+					this.props.history.replace('/login');
+				}
+			}
+		}, {
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps() {
+				if (_auth2.default.check()) {
+					this.setState({
+						loggedIn: true
+					});
+				} else {
+					this.setState({
+						loggedIn: false
+					});
+				}
+			}
+		}, {
+			key: 'logout',
+			value: function logout() {
+				_auth2.default.logout();
+				this.setState({
+					loggedIn: false
+				});
+				this.props.history.replace('/login');
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var button = this.state.loggedIn ? _react2.default.createElement(
+					'button',
+					{ onClick: this.logout.bind(this) },
+					'log out!'
+				) : null;
 				return _react2.default.createElement(
 					'div',
 					null,
+					button,
 					_react2.default.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _homeComponent2.default }),
-					_react2.default.createElement(_reactRouterDom.Route, { path: '/hello', component: _helloComponent2.default })
+					_react2.default.createElement(_reactRouterDom.Route, { path: '/hello', exact: true, component: _helloComponent2.default })
 				);
 			}
 		}]);
@@ -28534,8 +28581,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					'hello home!!',
-					store.user.name
+					'hello home!!'
 				);
 			}
 		}]);
@@ -28583,7 +28629,9 @@
 
 			var _this = _possibleConstructorReturn(this, (Hello.__proto__ || Object.getPrototypeOf(Hello)).call(this));
 
-			_this.state = {};
+			_this.state = {
+				items: []
+			};
 			return _this;
 		}
 
@@ -28595,7 +28643,7 @@
 					url: '/data'
 				}).then(function (res) {
 					this.setState({
-						text: res
+						items: JSON.parse(res)
 					});
 				}.bind(this));
 			}
@@ -28603,10 +28651,47 @@
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					'h1',
+					'div',
 					null,
-					'hello! ',
-					this.state.text
+					_react2.default.createElement(
+						'h1',
+						null,
+						'hello!'
+					),
+					this.state.items.map(function (item, i) {
+						return _react2.default.createElement(
+							'div',
+							{ key: i },
+							_react2.default.createElement(
+								'span',
+								null,
+								'id: ',
+								item.id,
+								' '
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'name: ',
+								item.name,
+								' '
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'description: ',
+								item.description,
+								' '
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'phone: ',
+								item.phone,
+								' '
+							)
+						);
+					})
 				);
 			}
 		}]);

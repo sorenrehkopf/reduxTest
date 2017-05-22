@@ -10,9 +10,9 @@ function Http(config){
 		req.onreadystatechange = function(){
 			console.log(req.readyState)
 			if(req.readyState === 4){
-				if(req.status === 200){
+				if(req.status >=200 && req.status < 210){
 					resolve(req.response);
-				}
+				}else reject(req.response);
 			}
 		}
 	});

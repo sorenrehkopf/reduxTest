@@ -5,7 +5,9 @@ class Hello extends Component{
 
 	constructor(){
 		super();
-		this.state = {}
+		this.state = {
+			items:[]
+		}
 	}
 
 	componentWillMount(){
@@ -14,13 +16,21 @@ class Hello extends Component{
 			url:'/data'
 		}).then(function(res){
 			this.setState({
-				text:res
+				items:JSON.parse(res)
 			});
 		}.bind(this));
 	}
 
 	render(){
-		return(<h1>hello! {this.state.text}</h1>)
+		return(<div>
+				<h1>hello!</h1>
+				{this.state.items.map((item,i)=>(<div key={i}>
+						<span>id: {item.id} </span> 
+						<span>name: {item.name} </span> 
+						<span>description: {item.description} </span> 
+						<span>phone: {item.phone} </span> 
+					</div>))}
+			</div>);
 	}
 
 }

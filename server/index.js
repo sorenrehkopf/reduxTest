@@ -35,8 +35,21 @@ app.get('/usercheck',function(req,res){
 
 app.get('/data',function(req,res){
 	console.log(req.user);
-	res.send('hello from the data!');
+	res.send(JSON.stringify(getData(6)));
 });
+
+function getData(n){
+	let arr = [];
+	for(let i=0;i<n;i++){
+		arr.push({
+			id:i,
+			name:'a name for the data',
+			description:'a description for the data. such grand grand data. I am overwhelmed by how amazing this data has been and will continue to be in the future.',
+			phone:'1234567890'
+		});
+	}
+	return arr;
+}
 
 app.listen(2020,function(){
 	console.log('listening on 2020!');
