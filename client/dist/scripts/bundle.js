@@ -62,15 +62,15 @@
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _loginComponent = __webpack_require__(265);
+	var _loginComponent = __webpack_require__(266);
 
 	var _loginComponent2 = _interopRequireDefault(_loginComponent);
 
-	var _mainComponent = __webpack_require__(269);
+	var _mainComponent = __webpack_require__(270);
 
 	var _mainComponent2 = _interopRequireDefault(_mainComponent);
 
-	var _http = __webpack_require__(267);
+	var _http = __webpack_require__(268);
 
 	var _http2 = _interopRequireDefault(_http);
 
@@ -28206,10 +28206,15 @@
 
 	var _user2 = _interopRequireDefault(_user);
 
+	var _data = __webpack_require__(265);
+
+	var _data2 = _interopRequireDefault(_data);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var appReducers = (0, _redux.combineReducers)({
-		User: _user2.default
+		User: _user2.default,
+		Data: _data2.default
 	});
 
 	exports.default = appReducers;
@@ -28242,6 +28247,32 @@
 
 /***/ }),
 /* 265 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var Data = function Data() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var action = arguments[1];
+
+
+		switch (action.type) {
+			case 'SET_DATA':
+				return {
+					user: action.data
+				};
+			default:
+				return state;
+		}
+	};
+
+	exports.default = Data;
+
+/***/ }),
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28256,11 +28287,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _auth = __webpack_require__(266);
+	var _auth = __webpack_require__(267);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _getFormData = __webpack_require__(268);
+	var _getFormData = __webpack_require__(269);
 
 	var _getFormData2 = _interopRequireDefault(_getFormData);
 
@@ -28315,7 +28346,7 @@
 	exports.default = Login;
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28326,7 +28357,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _http = __webpack_require__(267);
+	var _http = __webpack_require__(268);
 
 	var _http2 = _interopRequireDefault(_http);
 
@@ -28381,7 +28412,7 @@
 	exports.default = Auth;
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -28412,7 +28443,7 @@
 	exports.default = Http;
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -28434,7 +28465,7 @@
 	exports.default = getFormData;
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28451,15 +28482,17 @@
 
 	var _reactRouterDom = __webpack_require__(182);
 
-	var _homeComponent = __webpack_require__(270);
+	var _reactRedux = __webpack_require__(243);
+
+	var _homeComponent = __webpack_require__(271);
 
 	var _homeComponent2 = _interopRequireDefault(_homeComponent);
 
-	var _helloComponent = __webpack_require__(271);
+	var _helloComponent = __webpack_require__(272);
 
 	var _helloComponent2 = _interopRequireDefault(_helloComponent);
 
-	var _auth = __webpack_require__(266);
+	var _auth = __webpack_require__(267);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
@@ -28470,6 +28503,12 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			state: state
+		};
+	};
 
 	var Main = function (_Component) {
 		_inherits(Main, _Component);
@@ -28496,6 +28535,7 @@
 					});
 					this.props.history.replace('/login');
 				}
+				console.log(this.props);
 			}
 		}, {
 			key: 'componentWillReceiveProps',
@@ -28540,10 +28580,10 @@
 		return Main;
 	}(_react.Component);
 
-	exports.default = Main;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Main);
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28594,7 +28634,7 @@
 	exports.default = Home;
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28609,9 +28649,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _http = __webpack_require__(267);
+	var _http = __webpack_require__(268);
 
 	var _http2 = _interopRequireDefault(_http);
+
+	var _datasetComponent = __webpack_require__(273);
+
+	var _datasetComponent2 = _interopRequireDefault(_datasetComponent);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28631,6 +28675,12 @@
 
 			_this.state = {
 				items: []
+			};
+			_this.header = {
+				id: 'id',
+				name: 'name',
+				description: 'description',
+				phone: 'phone'
 			};
 			return _this;
 		}
@@ -28658,40 +28708,14 @@
 						null,
 						'hello!'
 					),
-					this.state.items.map(function (item, i) {
-						return _react2.default.createElement(
-							'div',
-							{ key: i },
-							_react2.default.createElement(
-								'span',
-								null,
-								'id: ',
-								item.id,
-								' '
-							),
-							_react2.default.createElement(
-								'span',
-								null,
-								'name: ',
-								item.name,
-								' '
-							),
-							_react2.default.createElement(
-								'span',
-								null,
-								'description: ',
-								item.description,
-								' '
-							),
-							_react2.default.createElement(
-								'span',
-								null,
-								'phone: ',
-								item.phone,
-								' '
-							)
-						);
-					})
+					_react2.default.createElement(
+						'div',
+						{ className: 'table' },
+						_react2.default.createElement(_datasetComponent2.default, { item: this.header }),
+						this.state.items.map(function (item, i) {
+							return _react2.default.createElement(_datasetComponent2.default, { key: i, item: item });
+						})
+					)
 				);
 			}
 		}]);
@@ -28700,6 +28724,76 @@
 	}(_react.Component);
 
 	exports.default = Hello;
+
+/***/ }),
+/* 273 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Dataset = function Dataset(props) {
+
+		return _react2.default.createElement(
+			"div",
+			{ className: "row" },
+			_react2.default.createElement(
+				"span",
+				{ className: "cell" },
+				_react2.default.createElement(
+					"span",
+					{ className: "label" },
+					"id: "
+				),
+				props.item.id,
+				" "
+			),
+			_react2.default.createElement(
+				"span",
+				{ className: "cell" },
+				_react2.default.createElement(
+					"span",
+					{ className: "label" },
+					"name: "
+				),
+				props.item.name,
+				" "
+			),
+			_react2.default.createElement(
+				"span",
+				{ className: "cell" },
+				_react2.default.createElement(
+					"span",
+					{ className: "label" },
+					"description: "
+				),
+				props.item.description,
+				" "
+			),
+			_react2.default.createElement(
+				"span",
+				{ className: "cell" },
+				_react2.default.createElement(
+					"span",
+					{ className: "label" },
+					"phone: "
+				),
+				props.item.phone,
+				" "
+			)
+		);
+	};
+
+	exports.default = Dataset;
 
 /***/ })
 /******/ ]);

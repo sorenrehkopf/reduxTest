@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 import Home from './home.component.jsx';
 import Hello from './hello.component.jsx';
 
 import Auth from '../services/auth.jsx';
+
+const mapStateToProps = function(state){
+	return {
+		state:state
+	}
+}
 
 
 class Main extends Component{
@@ -26,6 +33,7 @@ class Main extends Component{
 			});
 			this.props.history.replace('/login');
 		}
+		console.log(this.props);
 	}
 	componentWillReceiveProps(){
 		if(Auth.check()){
@@ -58,4 +66,4 @@ class Main extends Component{
 
 }
 
-export default Main;
+export default connect(mapStateToProps)(Main);

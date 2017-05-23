@@ -11,7 +11,7 @@ class Login extends Component{
 		Auth.authenticate(data,function(){
 			this.props.history.replace('/hello');
 		}.bind(this),
-		function(err){alert('error logging you in: '+err)}
+			function(err){alert('error logging you in: '+err)}
 		)
 	}	
 
