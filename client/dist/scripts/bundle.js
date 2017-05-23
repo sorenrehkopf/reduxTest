@@ -28653,8 +28653,6 @@
 
 	var _reactRedux = __webpack_require__(243);
 
-	var _redux = __webpack_require__(222);
-
 	var _datasetComponent = __webpack_require__(273);
 
 	var _datasetComponent2 = _interopRequireDefault(_datasetComponent);
@@ -28692,9 +28690,6 @@
 
 			var _this = _possibleConstructorReturn(this, (Hello.__proto__ || Object.getPrototypeOf(Hello)).call(this));
 
-			_this.state = {
-				items: []
-			};
 			_this.header = {
 				id: 'id',
 				name: 'name',

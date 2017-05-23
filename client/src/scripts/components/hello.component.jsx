@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Http from '../services/http.jsx';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import Dataset from './dataset.component.jsx';
 
@@ -22,9 +21,6 @@ class Hello extends Component{
 
 	constructor(){
 		super();
-		this.state = {
-			items:[]
-		}
 		this.header = {
 			id:'id',
 			name:'name',
