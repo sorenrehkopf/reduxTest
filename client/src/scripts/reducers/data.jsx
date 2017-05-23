@@ -1,10 +1,8 @@
-const Data = (state = {}, action) => {
-
+const Data = (state = [], action) => {
+	console.log(action);
 	switch(action.type){
 		case 'SET_DATA':
-			return {
-				user:action.data
-			}
+			return action.data
 		default:
 			return state;
 	}

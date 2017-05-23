@@ -28255,15 +28255,13 @@
 		value: true
 	});
 	var Data = function Data() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 		var action = arguments[1];
 
-
+		console.log(action);
 		switch (action.type) {
 			case 'SET_DATA':
-				return {
-					user: action.data
-				};
+				return action.data;
 			default:
 				return state;
 		}
@@ -28653,6 +28651,10 @@
 
 	var _http2 = _interopRequireDefault(_http);
 
+	var _reactRedux = __webpack_require__(243);
+
+	var _redux = __webpack_require__(222);
+
 	var _datasetComponent = __webpack_require__(273);
 
 	var _datasetComponent2 = _interopRequireDefault(_datasetComponent);
@@ -28664,6 +28666,23 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			data: state.Data
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			setItems: function setItems(data) {
+				dispatch({
+					type: 'SET_DATA',
+					data: data
+				});
+			}
+		};
+	};
 
 	var Hello = function (_Component) {
 		_inherits(Hello, _Component);
@@ -28692,9 +28711,8 @@
 					method: 'GET',
 					url: '/data'
 				}).then(function (res) {
-					this.setState({
-						items: JSON.parse(res)
-					});
+					console.log('proooops!', this.props);
+					this.props.setItems(JSON.parse(res));
 				}.bind(this));
 			}
 		}, {
@@ -28712,7 +28730,7 @@
 						'div',
 						{ className: 'table' },
 						_react2.default.createElement(_datasetComponent2.default, { item: this.header }),
-						this.state.items.map(function (item, i) {
+						this.props.data.map(function (item, i) {
 							return _react2.default.createElement(_datasetComponent2.default, { key: i, item: item });
 						})
 					)
@@ -28723,7 +28741,7 @@
 		return Hello;
 	}(_react.Component);
 
-	exports.default = Hello;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Hello);
 
 /***/ }),
 /* 273 */
@@ -28746,50 +28764,19 @@
 		return _react2.default.createElement(
 			"div",
 			{ className: "row" },
-			_react2.default.createElement(
-				"span",
-				{ className: "cell" },
-				_react2.default.createElement(
+			Object.keys(props.item).map(function (key, i) {
+				return _react2.default.createElement(
 					"span",
-					{ className: "label" },
-					"id: "
-				),
-				props.item.id,
-				" "
-			),
-			_react2.default.createElement(
-				"span",
-				{ className: "cell" },
-				_react2.default.createElement(
-					"span",
-					{ className: "label" },
-					"name: "
-				),
-				props.item.name,
-				" "
-			),
-			_react2.default.createElement(
-				"span",
-				{ className: "cell" },
-				_react2.default.createElement(
-					"span",
-					{ className: "label" },
-					"description: "
-				),
-				props.item.description,
-				" "
-			),
-			_react2.default.createElement(
-				"span",
-				{ className: "cell" },
-				_react2.default.createElement(
-					"span",
-					{ className: "label" },
-					"phone: "
-				),
-				props.item.phone,
-				" "
-			)
+					{ className: "cell", key: i },
+					_react2.default.createElement(
+						"span",
+						{ className: "label" },
+						key,
+						": "
+					),
+					props.item[key]
+				);
+			})
 		);
 	};
 

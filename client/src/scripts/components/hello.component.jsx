@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import Http from '../services/http.jsx';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Dataset from './dataset.component.jsx';
+
+const mapStateToProps = (state)=>({
+	data:state.Data
+});
+
+const mapDispatchToProps = (dispatch)=>({
+	setItems:function(data){
+		dispatch({
+			type:'SET_DATA',
+			data:data
+		})
+	}
+});
 
 class Hello extends Component{
 
@@ -23,9 +38,8 @@ class Hello extends Component{
 			method:'GET',
 			url:'/data'
 		}).then(function(res){
-			this.setState({
-				items:JSON.parse(res)
-			});
+			console.log('proooops!',this.props);
+			this.props.setItems(JSON.parse(res));
 		}.bind(this));
 	}
 
@@ -34,11 +48,11 @@ class Hello extends Component{
 				<h1>hello!</h1>
 				<div className="table">
 					<Dataset item={this.header}/>
-					{this.state.items.map((item,i)=>(<Dataset key={i} item={item}/>))}
+					{this.props.data.map((item,i)=>(<Dataset key={i} item={item}/>))}
 				</div>
 			</div>);
 	}
 
 }
 
-export default Hello;
+export default connect(mapStateToProps,mapDispatchToProps)(Hello);
